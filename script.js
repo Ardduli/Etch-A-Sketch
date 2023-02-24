@@ -14,7 +14,7 @@ document.body.appendChild(controls);
 const slider = document.createElement('input');
 slider.setAttribute('type','range');
 slider.setAttribute('min','1');
-slider.setAttribute('max','100');
+slider.setAttribute('max','64');
 slider.setAttribute('value','16');
 slider.setAttribute('class','slider');
 controls.appendChild(slider);
@@ -46,6 +46,32 @@ controls.appendChild(colorPicker);
 colorPicker.addEventListener('input', () => {
     return color = colorPicker.value;
 })
+
+//create draw and erase button
+const selectionContainer = document.createElement('div');
+    selectionContainer.classList.add('selectionContainer');
+controls.appendChild(selectionContainer)
+
+const draw = document.createElement('input')
+    draw.classList = 'button';
+    draw.setAttribute('value','DRAW');
+    draw.setAttribute('type','button');
+    draw.setAttribute('id','draw');
+selectionContainer.appendChild(draw);
+
+const rainbow = document.createElement('input');
+    rainbow.classList = 'button';
+    rainbow.setAttribute('value','RAINBOW');
+    rainbow.setAttribute('type','button');
+    rainbow.setAttribute('id','rainbow');
+selectionContainer.appendChild(rainbow);
+
+const erase = document.createElement('input')
+    erase.classList = 'button';
+    erase.setAttribute('value','ERASE');
+    erase.setAttribute('type','button');
+    erase.setAttribute('id','erase');
+selectionContainer.appendChild(erase);
 
 
 //creates the container for the grid
@@ -83,14 +109,43 @@ function createGrid() {
 
  // colors the clicked square
  function colorDraw(){
- let squares = document.querySelectorAll('.square');
- squares.forEach((square) => {
-     square.addEventListener('mouseover', () => {
-         let id = (square.id)
-         document.getElementById(id).style.backgroundColor = `${color}`;
-     })
- })
+    let squares = document.querySelectorAll('.square');
+    squares.forEach((square) => {
+        square.addEventListener('mouseover', () => {
+            let id = (square.id)
+            document.getElementById(id).style.backgroundColor = `${color}`;
+        })
+    })
+}   
+
+// eraser function
+function eraser(){
+    let squares = document.querySelectorAll('.square');
+    squares.forEach((square) => {
+        square.addEventListener('mouseover', () => {
+            let id = (square.id)
+            document.getElementById(id).style.backgroundColor = 'white';
+        })
+    })
 }
 
-createGrid(num = 16)
-colorDraw()
+//rainbow color function
+function colorRaibow(){
+    let squares = document.querySelectorAll('.square');
+    squares.forEach((square) => {
+        square.addEventListener('mouseover', () => {
+            let id = (square.id)
+            let colorRandom = Math.floor(Math.random()*16777215).toString(16);
+            document.getElementById(id).style.backgroundColor = '#' + colorRandom;
+        })
+    })
+}
+
+
+createGrid(num = 16);
+colorDraw();
+
+
+document.getElementById('erase').addEventListener('click', eraser);
+document.getElementById('draw').addEventListener('click', colorDraw);
+document.getElementById('rainbow').addEventListener('click', colorRaibow);
