@@ -31,7 +31,10 @@ controls.appendChild(output);
 }
 
 slider.addEventListener('mouseup', () => {
-    return sliderValue = document.querySelector('.slider').value;
+    remove();
+    num = document.querySelector('.slider').value;
+    createGrid();
+    colorDraw();
 })
 
 // create colorpicker
@@ -45,43 +48,49 @@ colorPicker.addEventListener('input', () => {
 })
 
 
-
-// values for the grid
-num = 16
-const grid = num * num;
-const perRow =  100/num;   
-
-
 //creates the container for the grid
-
 container.classList.add('container');
     
 document.body.appendChild(container);
 
 
-// creates the quares to the grid
-for(i = 0; i < grid; i++){
-    const square = document. createElement('div');
-    square.classList.add('square');
-    square.setAttribute('id',`${i}`)
-    container.appendChild(square);
+//function for grid removal
+function remove() {
+    let squares = document.querySelectorAll('.square');
+    squares.forEach((square) => {
+        square.remove()
+    })
 }
 
 
-
-// makes the squares to go on equal rows
-style.innerHTML = `
+//function that creates the grid
+function createGrid() {
+    let drawValue = num;
+    const grid = drawValue * drawValue;
+    const perRow =  100/drawValue;
+    for(i = 0; i < grid; i++){
+        const square = document. createElement('div');
+        square.classList.add('square');
+        square.setAttribute('id',`${i}`)
+        container.appendChild(square);
+    }
+    style.innerHTML = `
     .square {
         flex: 1 0 ${perRow}%
     }`;
-document.body.appendChild(style);
+    document.body.appendChild(style)
+}
 
  // colors the clicked square
-let squares = document.querySelectorAll('.square');
+ function colorDraw(){
+ let squares = document.querySelectorAll('.square');
+ squares.forEach((square) => {
+     square.addEventListener('mouseover', () => {
+         let id = (square.id)
+         document.getElementById(id).style.backgroundColor = `${color}`;
+     })
+ })
+}
 
-    squares.forEach((square) => {
-        square.addEventListener('mouseover', () => {
-            let id = (square.id)
-            document.getElementById(id).style.backgroundColor = `${color}`;
-        })
-    })
+createGrid(num = 16)
+colorDraw()
