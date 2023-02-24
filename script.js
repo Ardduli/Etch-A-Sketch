@@ -23,6 +23,7 @@ controls.appendChild(slider);
 
 const output = document.createElement('output');
 let sliderValue = document.querySelector('.slider').value;
+output.setAttribute('id','sliderValue');
 output.textContent = sliderValue;
 controls.appendChild(output);
 
